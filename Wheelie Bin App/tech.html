@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lachlan and Lachlan</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="/" id="navbar__logo">
+                <i class="fas fa-gem"></i>L&L
+            </a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="/index.html" class="navbar__links">Home</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/tech.html" class="navbar__links">Tech</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">Products</a>
+                </li>
+                <li class="navbar__btn ">
+                    <a href="/" class="button">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section-->
+    <div class="chartBox">
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+        <script>
+        const data = [];
+        const data2 = [];
+        let prev = 100;
+        let prev2 = 80;
+        for (let i = 0; i < 1000; i++) {
+            prev += 5 - Math.random() * 10;
+            data.push({x: i, y: prev});
+            prev2 += 5 - Math.random() * 10;
+            data2.push({x: i, y: prev2});
+        }
+        const totalDuration = 10000;
+        const delayBetweenPoints = totalDuration / data.length;
+        const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+        
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    borderColor: '#E12D2D',
+                    borderWidth: 1,
+                    radius: 0,
+                    data: data,
+                },
+                {
+                    borderColor: '#265AEB',
+                    borderWidth: 1,
+                    radius: 0,
+                    data: data2,
+                }]
+            },
+            options: {
+                animation: {
+                    x: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: delayBetweenPoints,
+                        from: NaN, // the point is initially skipped
+                        delay(ctx) {
+                            if (ctx.type !== 'data' || ctx.xStarted) {
+                                return 0;
+                            }
+                            ctx.xStarted = true;
+                              return ctx.index * delayBetweenPoints;
+                        }
+                    },
+                    y: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: delayBetweenPoints,
+                        from: previousY,
+                        delay(ctx) {
+                            if (ctx.type !== 'data' || ctx.yStarted) {
+                                return 0;
+                            }
+                            ctx.yStarted = true;
+                            return ctx.index * delayBetweenPoints;
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false
+                },
+                plugins: {
+                    legend: false
+                },
+                scales: {
+                    x: {
+                        type: 'linear'
+                    }
+                }
+            }
+        });
+        </script>
+
+
+    <!-- Services Section -->
+    
+    
+    <!--Footer Section-->
+    <div class="footer__container">
+        <div class="footer__links">
+            <div class="footer__link--wrapper">
+                <div class="footer__link--items">
+                    <h2>About Us</h2>
+                    <a href="/">How it works</a>
+                    <a href="/">Testimonals</a>
+                    <a href="/">Careers</a>
+                    <a href="/">Investments</a>
+                    <a href="/">Terms of Service</a>
+                </div>
+                <div class="footer__link--items">
+                    <h2>Contact Us</h2>
+                    <a href="/">Contact</a>
+                    <a href="/">Support</a>
+                    <a href="/">Destinations</a>
+                    <a href="/">Sponsorships</a>
+                </div>
+            </div><div class="footer__link--wrapper">
+                <div class="footer__link--items">
+                    <h2>Videos</h2>
+                    <a href="/">Submit Video</a>
+                    <a href="/">Ambassadors</a>
+                    <a href="/">Agency</a>
+                    <a href="/">Influencer</a>
+                </div>
+                <div class="footer__link--items">
+                    <h2>Social Media</h2>
+                    <a href="/">Instagram</a>
+                    <a href="/">Facebook</a>
+                    <a href="/">Youtube</a>
+                    <a href="/">Twitter</a>
+                </div>
+            </div>                                                  
+        </div>
+        <div class="social__media">
+            <div class="social__media--wrap">
+                <div class="footer__logo">
+                    <a href="/" id="footer__logo"><i class="fas fa-gem"></i>L&L</a>
+                </div>
+                <p class="website__rights">Lachlan and Lachlan 2021. All rights reserved</p>
+                <div class="social__icons">
+                    <a href="/" class="social__icon--link" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="/" class="social__icon--link" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="/" class="social__icon--link" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="/" class="social__icon--link" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="/" class="social__icon--link" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                        </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
